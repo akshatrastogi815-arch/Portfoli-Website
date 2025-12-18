@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akshat Rastogi | Portfolio</title>
+    <style>
+        /* --- CSS VARIABLES --- */
+        :root {
+            --bg-color: #050505;
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --accent-color: #6d64ff;
+            --accent-glow: rgba(109, 100, 255, 0.6);
+            --card-bg: #111;
+            --input-bg: #1a1a1a;
+            --border-color: #222;
+            --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+            --container-width: 1100px;
+            --transition-speed: 0.4s;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed; top: 0; width: 100%;
+            background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(12px);
+            z-index: 1000; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .nav-container {
+            max-width: var(--container-width); margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center; padding: 0 20px;
+        }
+        .logo { font-weight: 700; font-size: 1.2rem; letter-spacing: 0.5px; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent-color); }
+        .hire-me-btn {
+            background: var(--text-main); color: var(--bg-color); padding: 8px 20px;
+            border-radius: 6px; font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; transition: var(--transition-speed);
+        }
+        .hire-me-btn:hover { background: var(--accent-color); color: #fff; box-shadow: 0 0 15px var(--accent-glow); }
+
+        /* --- LAYOUT UTILITY --- */
+        section { padding: 100px 20px; max-width: var(--container-width); margin: 0 auto; }
+        .section-title {
+            font-size: 2.2rem; margin-bottom: 60px; display: flex; align-items: center; gap: 15px;
+        }
+        .section-title::before {
+            content: ''; display: block; width: 6px; height: 40px;
+            background: var(--accent-color); border-radius: 4px; box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        /* --- GLOW CARD EFFECT --- */
+        .glow-card {
+            background: var(--card-bg); border-radius: 16px; border: 1px solid var(--border-color);
+            position: relative; transition: var(--transition-speed); z-index: 1; overflow: hidden;
+        }
+        .glow-card::before {
+            content: ''; position: absolute; top: 50%; left: 50%; width: 100%; height: 100%;
+            background: var(--accent-color); border-radius: 50%; transform: translate(-50%, -50%) scale(0.5);
+            opacity: 0; filter: blur(60px); z-index: -1; transition: var(--transition-speed);
+        }
+        .glow-card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--accent-color); }
+        .glow-card:hover::before { opacity: 0.25; transform: translate(-50%, -50%) scale(1.2); }
+
+        /* --- HERO SECTION --- */
+        .hero-section { min-height: 90vh; display: flex; align-items: center; justify-content: space-between; padding-top: 100px; }
+        .hero-text { flex: 1; padding-right: 60px; }
+        .open-to-pill {
+            display: inline-block; background: rgba(109, 100, 255, 0.1); color: #8c85ff;
+            padding: 8px 16px; border-radius: 30px; font-size: 0.85rem; font-weight: 600; margin-bottom: 25px;
+            border: 1px solid rgba(109, 100, 255, 0.2); box-shadow: 0 0 10px rgba(109,100,255,0.1);
+        }
+        .hero-name {
+            font-size: 4rem; font-weight: 800; line-height: 1.1; margin-bottom: 10px;
+            background: linear-gradient(120deg, #fff 30%, #999); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero-roles {
+            font-size: 2rem; font-weight: 700; color: var(--accent-color); margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(109,100,255,0.3);
+        }
+        .hero-institute { font-size: 1.2rem; color: var(--text-main); margin-bottom: 30px; font-weight: 500; }
+        .hero-highlight {
+            font-size: 1.25rem; color: #cccccc; max-width: 600px; margin-bottom: 40px;
+            line-height: 1.8; border-left: 3px solid #333; padding-left: 20px;
+        }
+        .brand-highlight { color: var(--accent-color); font-weight: 700; text-shadow: 0 0 10px var(--accent-glow); }
+        .hero-buttons { display: flex; gap: 15px; }
+        .outline-btn {
+            padding: 12px 28px; border: 1px solid #444; color: var(--text-main);
+            border-radius: 8px; font-weight: 500; background: transparent; cursor: pointer; transition: 0.3s;
+        }
+        .outline-btn:hover { border-color: var(--accent-color); color: #fff; background: rgba(109,100,255,0.05); }
+        .hero-img-wrapper { position: relative; width: 380px; height: 380px; display: flex; justify-content: center; align-items: center; }
+        .hero-glow {
+            position: absolute; width: 100%; height: 100%; border-radius: 50%; background: var(--accent-color);
+            filter: blur(90px); opacity: 0; transition: 0.5s; z-index: -1;
+        }
+        .hero-img {
+            width: 340px; height: 340px; border-radius: 50%; object-fit: cover; filter: grayscale(100%);
+            transition: 0.5s; border: 2px solid #333; cursor: pointer;
+        }
+        .hero-img-wrapper:hover .hero-img { filter: grayscale(0%); transform: scale(1.05); border-color: var(--accent-color); }
+        .hero-img-wrapper:hover .hero-glow { opacity: 0.5; }
+
+        /* --- EXPERIENCE & POR --- */
+        .timeline-card { padding: 35px; margin-bottom: 30px; }
+        .time-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
+        .time-role { font-size: 1.5rem; font-weight: 700; color: #fff; }
+        .time-date { 
+            font-size: 0.85rem; color: var(--accent-color); background: rgba(109,100,255,0.1);
+            padding: 5px 12px; border-radius: 20px; border: 1px solid rgba(109,100,255,0.2);
+        }
+        .time-org { font-size: 1.1rem; color: #bbb; margin-bottom: 15px; font-style: italic; }
+        .time-desc ul { padding-left: 20px; }
+        .time-desc li { color: var(--text-muted); margin-bottom: 8px; font-size: 1rem; position: relative; list-style: disc; }
+
+        /* --- PROJECTS --- */
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .project-card { display: flex; flex-direction: column; cursor: pointer; }
+        .project-thumb { width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid #222; }
+        .data-thumb-placeholder {
+            width: 100%; height: 200px; background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            display: flex; justify-content: center; align-items: center; font-size: 3rem; color: #444; border-bottom: 1px solid #222;
+        }
+        .project-content { padding: 25px; flex: 1; display: flex; flex-direction: column; }
+        .project-title { font-size: 1.4rem; color: #fff; margin-bottom: 10px; font-weight: 700; }
+        .project-snippet { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; flex: 1; }
+        .read-more { color: var(--accent-color); font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 8px; margin-top: auto; }
+
+        /* --- SKILLS --- */
+        .skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .skill-card { padding: 30px; }
+        .skill-title { color: var(--accent-color); font-size: 1.3rem; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .skill-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+        .skill-tag {
+            background: rgba(255,255,255,0.03); border: 1px solid #333; padding: 8px 16px; border-radius: 8px; font-size: 0.9rem; color: #ccc; transition: 0.3s;
+        }
+        .skill-tag:hover { border-color: var(--accent-color); color: #fff; box-shadow: 0 0 10px rgba(109, 100, 255, 0.2); }
+
+        /* --- ACHIEVEMENTS (PIXEL PERFECT SYMMETRY) --- */
+        .achievements-wrapper {
+            display: flex;
+            gap: 40px;
+            align-items: stretch; /* This forces both sides to be equal height */
+            height: 360px; /* Fixed height: Perfect Landscape Shape */
+        }
+
+        .achievements-list {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* This forces items to spread evenly */
+            height: 100%;
+        }
+
+        .achievement-item {
+            padding: 0 25px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            border-left: 4px solid transparent;
+            cursor: pointer;
+            transition: 0.3s;
+            height: 23%; /* 4 items * 23% = 92% + 8% gaps = 100% fit */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .achievement-item:hover, .achievement-item.active {
+            background: rgba(109, 100, 255, 0.1);
+            border-left-color: var(--accent-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .ach-title { font-size: 1.1rem; color: #fff; font-weight: 600; margin-bottom: 4px; }
+        .ach-subtitle { font-size: 0.85rem; color: var(--text-muted); }
+
+        /* The "Monitor" Display */
+        .achievement-display {
+            flex: 1.3;
+            height: 100%; /* Matches wrapper height exactly */
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid #333;
+            box-shadow: 0 0 50px rgba(0,0,0,0.7);
+            background: #000;
+            position: relative;
+        }
+
+        .cert-link-wrapper {
+            display: block; width: 100%; height: 100%; position: relative; text-decoration: none;
+        }
+
+        .achievement-display img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures image fills the box cleanly */
+            object-position: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            position: absolute;
+            top: 0; left: 0;
+        }
+
+        .achievement-display img.active { opacity: 1; }
+        
+        /* Overlay Styles */
+        .cert-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7); display: flex; justify-content: center; align-items: center;
+            opacity: 0; transition: 0.3s; backdrop-filter: blur(2px);
+        }
+        .cert-btn {
+            padding: 12px 24px; border: 1px solid var(--accent-color); color: #fff;
+            border-radius: 30px; font-weight: 600; background: rgba(109, 100, 255, 0.2);
+            transform: translateY(20px); transition: 0.3s;
+        }
+        .cert-link-wrapper:hover .cert-overlay { opacity: 1; }
+        .cert-link-wrapper:hover .cert-btn { transform: translateY(0); }
+        
+        @media (max-width: 900px) {
+            .achievements-wrapper { flex-direction: column; height: auto; }
+            .achievement-display { display: none; } 
+            .achievement-item { height: auto; padding: 20px; margin-bottom: 15px; }
+            .mobile-ach-img { display: block; width: 100%; margin-top: 15px; border-radius: 8px; border: 1px solid #333; }
+        }
+
+        /* --- CONTACT --- */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start; }
+        .contact-info h2 { font-size: 3rem; color: #fff; margin-bottom: 20px; line-height: 1.1; }
+        .contact-subtext { color: var(--text-muted); margin-bottom: 40px; font-size: 1.1rem; }
+        .contact-highlight { color: #fff; font-weight: 600; }
+        .contact-details { display: flex; flex-direction: column; gap: 20px; }
+        .contact-item { display: flex; align-items: center; gap: 15px; font-size: 1.1rem; color: var(--text-main); }
+        .contact-icon { 
+            width: 45px; height: 45px; border-radius: 50%; background: #1a1a1a; 
+            display: flex; justify-content: center; align-items: center; border: 1px solid #333; color: var(--accent-color); font-size: 1.2rem;
+        }
+        .contact-item:hover .contact-icon { border-color: var(--accent-color); background: rgba(109,100,255,0.1); }
+        .contact-form-card { background: #0f0f0f; padding: 40px; border-radius: 20px; border: 1px solid #222; }
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; color: var(--text-muted); margin-bottom: 8px; font-size: 0.9rem; }
+        .form-input, .form-textarea {
+            width: 100%; padding: 12px 15px; background: var(--input-bg); border: 1px solid var(--border-color);
+            border-radius: 8px; color: #fff; font-family: var(--font-main); font-size: 1rem; outline: none; transition: 0.3s;
+        }
+        .form-input:focus, .form-textarea:focus { border-color: var(--accent-color); background: #000; }
+        .form-textarea { height: 120px; resize: vertical; }
+        .submit-btn {
+            width: 100%; padding: 15px; background: #fff; color: #000; border: none; border-radius: 8px;
+            font-weight: 700; font-size: 1rem; cursor: pointer; transition: 0.3s;
+        }
+        .submit-btn:hover { background: var(--accent-color); color: #fff; }
+        .or-divider { text-align: center; margin: 20px 0; color: #444; font-size: 0.9rem; }
+        .whatsapp-btn {
+            display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%; padding: 12px;
+            background: transparent; color: #25D366; border: 1px solid #25D366; border-radius: 8px;
+            font-weight: 600; cursor: pointer; transition: 0.3s;
+        }
+        .whatsapp-btn:hover { background: rgba(37, 211, 102, 0.1); }
+
+        /* --- MODAL --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
+            z-index: 2000; display: none; justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-content {
+            background: #151515; width: 90%; max-width: 800px; max-height: 90vh;
+            border-radius: 20px; border: 1px solid #333; overflow-y: auto;
+            position: relative; transform: translateY(30px); transition: transform 0.3s ease;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.9);
+        }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+        .close-btn {
+            position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.5); color: #fff;
+            border: 1px solid #444; width: 40px; height: 40px; border-radius: 50%;
+            font-size: 1.5rem; cursor: pointer; z-index: 10; transition: 0.3s;
+        }
+        .close-btn:hover { background: var(--accent-color); border-color: var(--accent-color); }
+        .modal-header img, .modal-header .data-thumb-placeholder { width: 100%; height: 250px; object-fit: cover; opacity: 0.8; }
+        .modal-body { padding: 40px; }
+        .modal-title { font-size: 2.2rem; color: #fff; margin-bottom: 15px; line-height: 1.2; }
+        .modal-tags { margin-bottom: 25px; display: flex; flex-wrap: wrap; gap: 10px; }
+        .modal-tag { background: rgba(109, 100, 255, 0.15); color: #8c85ff; padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; border: 1px solid rgba(109,100,255,0.2); }
+        .modal-text { color: #ccc; font-size: 1.05rem; line-height: 1.8; margin-bottom: 35px; white-space: pre-line; }
+        .modal-link-btn {
+            display: inline-block; background: var(--accent-color); color: #fff; padding: 14px 35px;
+            border-radius: 8px; font-weight: 600; width: 100%; text-align: center;
+            transition: 0.3s; box-shadow: 0 5px 20px rgba(109,100,255,0.4);
+        }
+        .modal-link-btn:hover { background: #5850cc; transform: translateY(-2px); }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .hero-section { flex-direction: column-reverse; text-align: center; padding-top: 120px; }
+            .hero-text { padding-right: 0; margin-top: 50px; }
+            .hero-highlight { margin: 30px auto; border: none; padding: 0; }
+            .hero-buttons { justify-content: center; }
+            .nav-links { display: none; }
+            .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+            
+            /* Mobile Adjustments for Achievements */
+            .achievements-wrapper { flex-direction: column; }
+            .achievement-display { display: none; } /* Hide the big display on mobile */
+            .achievement-item { background: #111; border: 1px solid #333; }
+            /* On mobile, we can just click to view PDF directly if desired, or show image inside */
+            .mobile-ach-img { display: block; width: 100%; margin-top: 15px; border-radius: 8px; border: 1px solid #333; }
+        }
+        @media (min-width: 901px) {
+            .mobile-ach-img { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <div class="logo">./akshat_rastogi</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Work</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#achievements">Achievements</a></li>
+            </ul>
+            <a href="#contact"><button class="hire-me-btn">Contact Me</button></a>
+        </div>
+    </nav>
+
+    <section id="about" class="hero-section">
+        <div class="hero-text">
+            <div class="open-to-pill">Open to Product & Data Roles</div>
+            <h1 class="hero-name">Akshat Rastogi</h1>
+            <h2 class="hero-roles">Product Strategy,<br>Data Analytics & Growth.</h2>
+            <h3 class="hero-institute">IIT (BHU) Varanasi '26</h3>
+            <p class="hero-highlight">
+                I build products and analyze data. I founded <span class="brand-highlight">TIFBI</span>, a sustainable fashion marketplace, where I led product strategy, connected with major startups, and drove <strong style="color:#fff; border-bottom: 2px solid var(--accent-color);">250+ sales</strong> in the initial launch.
+            </p>
+            <div class="hero-buttons">
+                <a href="#projects" class="hire-me-btn" style="text-decoration:none;">View Work</a>
+                <a href="https://drive.google.com/file/d/1EC0Rj0z61S8ZJBRn7dG3ikxo6dDqaJyy/view?usp=sharing" target="_blank" class="outline-btn">View Resume</a>
+            </div>
+        </div>
+        <div class="hero-img-wrapper">
+            <div class="hero-glow"></div>
+            <img src="profile.jpg" alt="Akshat Rastogi" class="hero-img">
+        </div>
+    </section>
+
+    <section id="experience">
+        <h2 class="section-title">Experience</h2>
+        <div class="glow-card timeline-card">
+            <div class="time-header">
+                <div><h3 class="time-role">Product Intern</h3><div class="time-org">Raam Group</div></div>
+                <span class="time-date">May 2025 - Aug 2025</span>
+            </div>
+            <div class="time-desc">
+                <ul>
+                    <li>Led AI Summary feature from concept to launch, streamlining 50+ weekly summaries.</li>
+                    <li>Introduced Teacher Video feature, boosting Parent engagement by 40% and conversion by 15%.</li>
+                    <li>Executed QA on MacOS, resolving 30+ bugs and reducing turnaround time by 30%.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="glow-card timeline-card">
+            <div class="time-header">
+                <div><h3 class="time-role">Product Manager</h3><div class="time-org">MOUTUPS</div></div>
+                <span class="time-date">May 2024 - July 2024</span>
+            </div>
+            <div class="time-desc">
+                <ul>
+                    <li>Conducted SWOT analysis and estimated TAM ($375M) / SAM ($78M).</li>
+                    <li>Developed Product Roadmap using consumer insights and Power BI analysis.</li>
+                    <li>Led UX & SDE teams to build job portal app; introduced gamification features to boost retention.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="glow-card timeline-card">
+            <div class="time-header">
+                <div><h3 class="time-role">Founder & CPO</h3><div class="time-org">TIFBI (The Fashion Brand)</div></div>
+                <span class="time-date">April 2023 - Sept 2024</span>
+            </div>
+            <div class="time-desc">
+                <ul>
+                    <li>Built a marketplace for Sustainable Fashion Products.</li>
+                    <li>Developed GTM strategy and connected with startups like PW and Go Waterless.</li>
+                    <li>Designed wireframes and mapped user journey, generating 250+ sales in initial launch.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2 class="section-title">Projects & Case Studies</h2>
+        <div class="project-grid">
+            <div class="glow-card project-card" onclick="openModal('modal-flipkart')">
+                <img src="flipkart.jpg" alt="Flipkart" class="project-thumb">
+                <div class="project-content">
+                    <h3 class="project-title">Netflix: Offline-First Model</h3>
+                    <p class="project-snippet">Reframing Netflix as a content distribution platform for low-connectivity emerging markets.</p>
+                    <div class="read-more">Read Case Study →</div>
+                </div>
+                <div id="modal-flipkart" class="modal-data" style="display:none;">
+                    <div class="data-title">Netflix for the Next Billion</div>
+                    <div class="data-img">flipkart.jpg</div><div class="data-type">image</div>
+                    <div class="data-link">https://drive.google.com/file/d/1IAHsjzSzBA4saKEN-Qm59l4W50AgnWP4/view?usp=sharing</div>
+                    <div class="data-tags">Product Strategy, Market Expansion, User-Centric Design</div>
+                    <div class="data-desc">This case study explored how Netflix could adapt its product and distribution model in a world where reliable internet access and affordable data are not guaranteed...</div>
+                </div>
+            </div>
+            <div class="glow-card project-card" onclick="openModal('modal-risa')">
+                <img src="risa.jpg" alt="Risa Labs" class="project-thumb">
+                <div class="project-content">
+                    <h3 class="project-title">Thread Browser (0 to 1)</h3>
+                    <p class="project-snippet">A productivity browser concept designed to solve tab overload for researchers.</p>
+                    <div class="read-more">Read Case Study →</div>
+                </div>
+                <div id="modal-risa" class="modal-data" style="display:none;">
+                    <div class="data-title">Thread Browser: 0→1 Product Concept</div>
+                    <div class="data-img">risa.jpg</div><div class="data-type">image</div>
+                    <div class="data-link">https://drive.google.com/file/d/18jLV92SNW8rBEMpE-zqALwD94mEcTk08/view?usp=sharing</div>
+                    <div class="data-tags">Product Design, 0 to 1, User Research</div>
+                    <div class="data-desc">Thread Browser is a 0→1 product concept designed to solve a core productivity problem faced by students and researchers...</div>
+                </div>
+            </div>
+            <div class="glow-card project-card" onclick="openModal('modal-axis')">
+                <img src="axis.jpg" alt="Axis Bank" class="project-thumb">
+                <div class="project-content">
+                    <h3 class="project-title">Axis Bank Rural Expansion</h3>
+                    <p class="project-snippet">Designing a scalable rural banking strategy to address financial inclusion in India.</p>
+                    <div class="read-more">Read Case Study →</div>
+                </div>
+                <div id="modal-axis" class="modal-data" style="display:none;">
+                    <div class="data-title">Axis Bank: Rural Banking Expansion</div>
+                    <div class="data-img">axis.jpg</div><div class="data-type">image</div>
+                    <div class="data-link">https://drive.google.com/file/d/1IAHsjzSzBA4saKEN-Qm59l4W50AgnWP4/view?usp=sharing</div>
+                    <div class="data-tags">Financial Inclusion, GTM Strategy, Operating Models</div>
+                    <div class="data-desc">This case study focused on designing a scalable rural banking expansion strategy for Axis Bank...</div>
+                </div>
+            </div>
+            <div class="glow-card project-card" onclick="openModal('modal-raam')">
+                <img src="raam.jpg" alt="Raam Group" class="project-thumb">
+                <div class="project-content">
+                    <h3 class="project-title">EdTech Gamification</h3>
+                    <p class="project-snippet">Solving low attention spans in live K-12 classes through gamification and AI.</p>
+                    <div class="read-more">Read Case Study →</div>
+                </div>
+                <div id="modal-raam" class="modal-data" style="display:none;">
+                    <div class="data-title">Raam Group: Gamifying Live Classes</div>
+                    <div class="data-img">raam.jpg</div><div class="data-type">image</div>
+                    <div class="data-link">https://drive.google.com/file/d/16ca664sukpo19LV65AQfqWQznREQD-XS/view?usp=sharing</div>
+                    <div class="data-tags">Product Discovery, AI Integration, UX</div>
+                    <div class="data-desc">This project focused on solving low attention span and disengagement in live online classes...</div>
+                </div>
+            </div>
+            <div class="glow-card project-card" onclick="openModal('modal-cust')">
+                <div class="data-thumb-placeholder">📊</div>
+                <div class="project-content">
+                    <h3 class="project-title">Customer Segmentation</h3>
+                    <p class="project-snippet">Market Analysis using K-Means Clustering and PCA reduction.</p>
+                    <div class="read-more">View Details →</div>
+                </div>
+                <div id="modal-cust" class="modal-data" style="display:none;">
+                    <div class="data-title">Customer Segmentation for Market Analysis</div>
+                    <div class="data-img">📊</div><div class="data-type">icon</div>
+                    <div class="data-link">#</div>
+                    <div class="data-tags">Python, SQL, PCA, K-Means, EDA</div>
+                    <div class="data-desc">Performed EDA and feature engineering on 35K+ customer records using SQL & Python...</div>
+                </div>
+            </div>
+            <div class="glow-card project-card" onclick="openModal('modal-reddit')">
+                <div class="data-thumb-placeholder">🔎</div>
+                <div class="project-content">
+                    <h3 class="project-title">Reddit Data Analysis</h3>
+                    <p class="project-snippet">Exploratory Data Analysis using Pandas and SQL on 10K+ posts.</p>
+                    <div class="read-more">View Details →</div>
+                </div>
+                <div id="modal-reddit" class="modal-data" style="display:none;">
+                    <div class="data-title">Exploratory Data Analysis (Reddit)</div>
+                    <div class="data-img">🔎</div><div class="data-type">icon</div>
+                    <div class="data-link">#</div>
+                    <div class="data-tags">Pandas, SQL, Data Cleaning</div>
+                    <div class="data-desc">Performed EDA on 10K+ Reddit posts using Pandas & SQL...</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2 class="section-title">Technical Skills</h2>
+        <div class="skills-container">
+            <div class="glow-card skill-card">
+                <h3 class="skill-title">Product Management</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Product Analytics</span><span class="skill-tag">Roadmapping</span>
+                    <span class="skill-tag">GTM Strategy</span><span class="skill-tag">Wireframing</span>
+                    <span class="skill-tag">Market Research</span><span class="skill-tag">User Stories</span>
+                </div>
+            </div>
+            <div class="glow-card skill-card">
+                <h3 class="skill-title">Data & Analytics</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">SQL</span><span class="skill-tag">Python</span>
+                    <span class="skill-tag">Power BI</span><span class="skill-tag">Excel</span>
+                    <span class="skill-tag">Tableau</span><span class="skill-tag">Pandas / NumPy</span>
+                </div>
+            </div>
+            <div class="glow-card skill-card">
+                <h3 class="skill-title">Tools & Soft Skills</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Figma</span><span class="skill-tag">Jira</span><span class="skill-tag">Canva</span>
+                    <span class="skill-tag">Communication</span><span class="skill-tag">Stakeholder Mgmt</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="por">
+        <h2 class="section-title">Positions of Responsibility</h2>
+        <div class="glow-card timeline-card">
+            <div class="time-header">
+                <div><h3 class="time-role">INI Manager</h3><div class="time-org">Innovation and Incubation Head | E-Cell IIT BHU</div></div>
+                <span class="time-date">July 2024 - May 2025</span>
+            </div>
+            <div class="time-desc">
+                <ul>
+                    <li>Launched the institute's first PG entrepreneurship program (IPEP) and co-established a Joint Incubation Centre...</li>
+                    <li>Strengthened the innovation ecosystem through streamlined NIRF innovation reporting...</li>
+                    <li>Enhanced institutional visibility via IPR sessions...</li>
+                </ul>
+            </div>
+        </div>
+        <div class="glow-card timeline-card">
+            <div class="time-header">
+                <div><h3 class="time-role">SAP Associate</h3><div class="time-org">Startup Assistance Program | E-Cell IIT BHU</div></div>
+                <span class="time-date">Aug 2023 - July 2024</span>
+            </div>
+            <div class="time-desc">
+                <ul>
+                    <li>Mentored 20+ student startups from ideation stage to having real world impact...</li>
+                    <li>Ideating and organising 6+ events to foster entrepreneurship...</li>
+                    <li>Build and managed a community of 600+ freshers...</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="achievements">
+        <h2 class="section-title">Honors & Achievements</h2>
+        
+        <div class="achievements-wrapper">
+            <div class="achievements-list">
+                
+                <div class="achievement-item active" onmouseover="showCert('hult.jpg', 'https://drive.google.com/file/d/1Y6yP37CrYC9tZoZHuMboLWxSDtN2iMCL/view?usp=sharing', this)">
+                    <div class="ach-title">Regional Finalist - Hult Prize'23</div>
+                    <div class="ach-subtitle">Top 5000+ aspiring founders across South Asia.</div>
+                    <a href="https://drive.google.com/file/d/1Y6yP37CrYC9tZoZHuMboLWxSDtN2iMCL/view?usp=sharing" target="_blank">
+                        <img src="hult.jpg" class="mobile-ach-img">
+                    </a>
+                </div>
+
+                <div class="achievement-item" onmouseover="showCert('smartidea.jpg', 'https://drive.google.com/file/d/1TrMIXYCGo4ZxsfBx9yirCR3VzavXVM7v/view?usp=sharing', this)">
+                    <div class="ach-title">National Finalist - SmartIDEAthon’23</div>
+                    <div class="ach-subtitle">Top 8 Finalist from 1000+ teams by StartupIndia.</div>
+                    <a href="https://drive.google.com/file/d/1TrMIXYCGo4ZxsfBx9yirCR3VzavXVM7v/view?usp=sharing" target="_blank">
+                        <img src="smartidea.jpg" class="mobile-ach-img">
+                    </a>
+                </div>
+
+                <div class="achievement-item" onmouseover="showCert('sarcathon.jpg', 'https://drive.google.com/file/d/16mfCFJKQiG2vasnXF6u11LVt-RTivaqN/view?usp=sharing', this)">
+                    <div class="ach-title">Top 10 Team - SARCathon</div>
+                    <div class="ach-subtitle">IIT Bombay Pan-India Case Competition.</div>
+                    <a href="https://drive.google.com/file/d/16mfCFJKQiG2vasnXF6u11LVt-RTivaqN/view?usp=sharing" target="_blank">
+                        <img src="sarcathon.jpg" class="mobile-ach-img">
+                    </a>
+                </div>
+
+                <div class="achievement-item" onmouseover="showCert('vishleshan.jpg', 'https://drive.google.com/file/d/1osUyN06Tm57NiwwpsoqC88rxLsfFKa7w/view?usp=sharing', this)">
+                    <div class="ach-title">Top 10 Finalist - Vishleshan</div>
+                    <div class="ach-subtitle">Annual Flagship Case Competition of VNIT.</div>
+                    <a href="https://drive.google.com/file/d/1osUyN06Tm57NiwwpsoqC88rxLsfFKa7w/view?usp=sharing" target="_blank">
+                        <img src="vishleshan.jpg" class="mobile-ach-img">
+                    </a>
+                </div>
+            </div>
+
+            <div class="achievement-display">
+                <a id="cert-link-wrapper" href="https://drive.google.com/file/d/1Y6yP37CrYC9tZoZHuMboLWxSDtN2iMCL/view?usp=sharing" target="_blank" class="cert-link-wrapper">
+                    
+                    <img id="cert-display" src="hult.jpg" class="active">
+                    
+                    <div class="cert-overlay">
+                        <div class="cert-btn">View Certificate </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h2>Let's talk product.</h2>
+                <p class="contact-subtext">
+                    Actively seeking full-time roles in <span class="contact-highlight">Product Management</span>, <span class="contact-highlight">Data Analytics</span>, and <span class="contact-highlight">Strategy</span>. 
+                </p>
+                <div class="contact-details">
+                    <a href="mailto:akshat.rastogi.phe22@iitbhu.ac.in" class="contact-item">
+                        <div class="contact-icon">✉</div><span>akshat.rastogi.phe22@iitbhu.ac.in</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/akshat-rastogi-reacher/" target="_blank" class="contact-item">
+                        <div class="contact-icon">in</div><span>LinkedIn Profile</span>
+                    </a>
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div><span>+91 9648078196</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form-card">
+                <form action="https://api.web3forms.com/submit" method="POST">
+                    <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+                    <div class="form-group"><label class="form-label">Name</label><input type="text" name="name" class="form-input" required></div>
+                    <div class="form-group"><label class="form-label">Email</label><input type="email" name="email" class="form-input" required></div>
+                    <div class="form-group"><label class="form-label">Message</label><textarea name="message" class="form-textarea" required></textarea></div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                    <div class="or-divider">OR</div>
+                    <a href="https://wa.me/919648078196?text=Hi%20Akshat..." target="_blank" class="whatsapp-btn">Chat on WhatsApp</a>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 50px; color: #555; font-size: 0.9rem;">
+        <p>© 2025 Akshat Rastogi. Built with Code.</p>
+    </footer>
+
+    <div id="project-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <div class="modal-header" id="modal-header-container"></div>
+            <div class="modal-body">
+                <h2 id="m-title" class="modal-title"></h2>
+                <div id="m-tags" class="modal-tags"></div>
+                <p id="m-desc" class="modal-text"></p>
+                <a id="m-link" href="#" target="_blank" class="modal-link-btn">View Full Case Study (PDF)</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- ACHIEVEMENT SHOWCASE LOGIC (FIXED) ---
+        function showCert(imgName, linkUrl, element) {
+            const displayImg = document.getElementById('cert-display');
+            const displayLink = document.getElementById('cert-link-wrapper');
+            
+            displayImg.style.opacity = 0;
+            setTimeout(() => {
+                displayImg.src = imgName;
+                displayImg.style.opacity = 1;
+            }, 200);
+
+            displayLink.href = linkUrl;
+
+            const items = document.querySelectorAll('.achievement-item');
+            items.forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        // --- MODAL LOGIC ---
+        const modal = document.getElementById('project-modal');
+        const mHeader = document.getElementById('modal-header-container');
+        const mTitle = document.getElementById('m-title');
+        const mTags = document.getElementById('m-tags');
+        const mDesc = document.getElementById('m-desc');
+        const mLink = document.getElementById('m-link');
+
+        function openModal(dataId) {
+            const dataDiv = document.getElementById(dataId);
+            const title = dataDiv.querySelector('.data-title').innerText;
+            const imgSrc = dataDiv.querySelector('.data-img').innerText;
+            const type = dataDiv.querySelector('.data-type').innerText;
+            const link = dataDiv.querySelector('.data-link').innerText;
+            const tags = dataDiv.querySelector('.data-tags').innerText.split(',');
+            const desc = dataDiv.querySelector('.data-desc').innerText;
+
+            mTitle.innerText = title;
+            mDesc.innerText = desc;
+            if (type === 'image') { mHeader.innerHTML = `<img src="${imgSrc}" class="modal-img">`; } 
+            else { mHeader.innerHTML = `<div class="data-thumb-placeholder" style="height:250px;">${imgSrc}</div>`; }
+            if (link === '#' || link === '') { mLink.style.display = 'none'; } else { mLink.style.display = 'inline-block'; mLink.href = link; }
+            mTags.innerHTML = '';
+            tags.forEach(tag => { const span = document.createElement('span'); span.className = 'modal-tag'; span.innerText = tag.trim(); mTags.appendChild(span); });
+            modal.classList.add('active'); document.body.style.overflow = 'hidden';
+        }
+        function closeModal() { modal.classList.remove('active'); document.body.style.overflow = 'auto'; }
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+        // --- NAVBAR SCROLL ---
+        const sections = document.querySelectorAll("section");
+        const navLi = document.querySelectorAll(".nav-links a");
+        window.onscroll = () => {
+            let current = "";
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 150) { current = section.getAttribute("id"); }
+            });
+            navLi.forEach((li) => {
+                li.classList.remove("active");
+                if (li.getAttribute("href").includes(current)) { li.classList.add("active"); }
+            });
+        };
+    </script>
+</body>
+</html>
